@@ -6,15 +6,18 @@ import TicketList from "./components/ticket-list/TicketList";
 function App() {
   const initialState = {
     tickets: [],
+    editingTicket: null,
   };
 
   const [state, dispatch] = useReducer(ticketReducer, initialState);
 
   return (
-    <div className="App">
+    <div className="App container">
       <h1> BUG Blaster </h1>
-      <TicketForm dispatch={dispatch}></TicketForm>
-
+      <TicketForm
+        dispatch={dispatch}
+        editingTicket={state.editingTicket}
+      ></TicketForm>
       {state.tickets.length > 0 && (
         <>
           <h2>All Tickets</h2>

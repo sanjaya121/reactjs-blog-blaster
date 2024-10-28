@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ticketform.scss";
 
-const TicketForm = ({ dispatch }) => {
+const TicketForm = ({ dispatch, editingTicket }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("1");
+  useEffect(() => {
+    if (editingTicket) {
+      setTitle(editingTicket.title);
+      setDescription(editingTicket.description);
+      setPriority(editingTicket.priority);
+    } else {
+      clearForm();
+    }
+  }, [editingTicket]);
 
   const priorityLabel = {
     1: "Low",
@@ -22,13 +31,15 @@ const TicketForm = ({ dispatch }) => {
     console.log("Form Submit :>>");
     e.preventDefault();
     const ticketData = {
-      id: Math.floor(Math.random() * 1000000000),
+      id: editingTicket
+        ? editingTicket.id
+        : Math.floor(Math.random() * 1000000000),
       title,
       description,
       priority,
     };
     dispatch({
-      type: "ADD_TICKET",
+      type: editingTicket ? "UPDATE_TICKET" : "ADD_TICKET",
       payload: ticketData,
     });
     console.log("ticketData :>> ", ticketData);
