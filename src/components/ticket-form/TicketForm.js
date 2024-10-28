@@ -5,7 +5,9 @@ const TicketForm = ({ dispatch, editingTicket }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("1");
+
   useEffect(() => {
+    console.log("useEffect with Dependency");
     if (editingTicket) {
       setTitle(editingTicket.title);
       setDescription(editingTicket.description);
@@ -14,6 +16,41 @@ const TicketForm = ({ dispatch, editingTicket }) => {
       clearForm();
     }
   }, [editingTicket]);
+
+  useEffect(() => {
+    console.log("useEffect without Dependency");
+    filterMovies(1);
+  }, []);
+  const filterMovies = (id) => {
+    const movie = [
+      {
+        id: 1,
+        title: "Jawan",
+        desc: "jawan jwan jawan",
+      },
+      {
+        id: 2,
+        title: "Rang De Basanti",
+        desc: "The story of six young Indians who assist an English woman to film a documentary on the freedom fighters from their past, and the events that lead them to relive the long-forgotten saga of freedom.",
+      },
+      {
+        id: 3,
+        title: " 3 Idiots",
+        desc: "Two friends are searching for their long lost companion. They revisit their college days and recall the memories of their friend who inspired them to think differently, even as the rest of the world called them idiots",
+      },
+      {
+        id: 4,
+        title: "Swades",
+        desc: "A successful Indian scientist returns to an Indian village to take his nanny to America with him and in the process rediscovers his roots.",
+      },
+      {
+        id: 5,
+        title: "Dangal",
+        desc: "Mahavir Singh Phogat, a former wrestler, decides to fulfill his dream of winning a gold medal for his country by training his daughters for the Commonwealth Games despite the existing social stigmas.",
+      },
+    ];
+    console.log(movie.filter((mov) => id == mov.id));
+  };
 
   const priorityLabel = {
     1: "Low",
